@@ -41,6 +41,30 @@
     For more details:
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
+  <!-- web only: tflite_flutter doesn't work in the browser, so the web build
+       runs the same model.tflite with tfjs-tflite -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@4.9.0/dist/tf-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-cpu@4.9.0/dist/tf-backend-cpu.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite@0.0.1-alpha.10/dist/tf-tflite.min.js"></script>
+  <script>
+    window.tmLoad = async function (url) {
+      tflite.setWasmPath('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite@0.0.1-alpha.10/wasm/');
+      window.tmModel = await tflite.loadTFLiteModel(url);
+      const i = tmModel.inputs[0], o = tmModel.outputs[0];
+      return JSON.stringify({inDtype: i.dtype, inShape: i.shape, outShape: o.shape});
+    };
+    // rgb: flat R,G,B bytes of a size x size image. returns the raw output scores
+    window.tmPredict = function (rgb, size, asFloat) {
+      return tf.tidy(() => {
+        const x = asFloat
+          ? tf.tensor(Float32Array.from(rgb, v => v / 127.5 - 1), [1, size, size, 3], 'float32')
+          : tf.tensor(Int32Array.from(rgb), [1, size, size, 3], 'int32');
+        const y = tmModel.predict(x);
+        const t = y instanceof tf.Tensor ? y : Object.values(y)[0];
+        return Float32Array.from(t.dataSync());
+      });
+    };
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

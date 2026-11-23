@@ -56,17 +56,47 @@ There is no separate background class, so an empty page will still get one of th
    - The training pictures were all taken one way (same webcam, lighting, pen and paper), so a downloaded digit with a different font, thickness or background looks unfamiliar.
    - Downloaded pictures are often cropped differently or the digit is small in the frame, but in training the digit filled most of the square.
 2. `classify` runs on the UI thread. How long does it take on your phone (the Result screen prints the Stopwatch time), and what does the user see meanwhile?
-   - Measured: ___ ms on ______ (shows a spinner while it runs). The image decoding runs in `Isolate.run`, so the spinner keeps moving.
+   - Measured in the browser build (Edge, tfjs-tflite, quantized model): 15-31 ms per image (the Result screen shows it, e.g. 26 ms and 31 ms). It's so fast that the spinner only flashes. On the phone the decode runs in `Isolate.run`, so the spinner keeps moving while it works.
 
 ## Evaluation table (T23)
-Three new pictures per class, all three sources used across the test.
+Run in the browser build (Edge) with the same `model.tflite`, through the app's **Download an image** source (served from localhost). The test pictures are digits written in 3 handwriting fonts (Ink Free, Segoe Print, Bradley Hand), black on white, saved in `docs/eval/`. Camera and gallery need the phone, so they are not in this table.
 
-| # | Source | Expected | Predicted | Confidence | Correct? |
-|---|--------|----------|-----------|-----------:|----------|
-| 1 | | | | | |
+| # | Source | Image | Expected | Predicted | Confidence | Correct? |
+|---|--------|-------|----------|-----------|-----------:|----------|
+| 1 | Download | `docs/eval/0_brad.png` | zero | zero | 51.2 % | yes |
+| 2 | Download | `docs/eval/0_ink.png` | zero | zero | 75.9 % | yes |
+| 3 | Download | `docs/eval/0_print.png` | zero | six | 43.4 % | no |
+| 4 | Download | `docs/eval/1_brad.png` | one | one | 77.7 % | yes |
+| 5 | Download | `docs/eval/1_ink.png` | one | one | 94.1 % | yes |
+| 6 | Download | `docs/eval/1_print.png` | one | four | 98.8 % | no |
+| 7 | Download | `docs/eval/2_brad.png` | two | two | 70.7 % | yes |
+| 8 | Download | `docs/eval/2_ink.png` | two | two | 65.5 % | yes |
+| 9 | Download | `docs/eval/2_print.png` | two | three | 51.2 % | no |
+| 10 | Download | `docs/eval/3_brad.png` | three | three | 67.8 % | yes |
+| 11 | Download | `docs/eval/3_ink.png` | three | three | 98.4 % | yes |
+| 12 | Download | `docs/eval/3_print.png` | three | three | 74.9 % | yes |
+| 13 | Download | `docs/eval/4_brad.png` | four | one | 94.5 % | no |
+| 14 | Download | `docs/eval/4_ink.png` | four | four | 78.5 % | yes |
+| 15 | Download | `docs/eval/4_print.png` | four | four | 70.6 % | yes |
+| 16 | Download | `docs/eval/5_brad.png` | five | five | 97.7 % | yes |
+| 17 | Download | `docs/eval/5_ink.png` | five | three | 90.9 % | no |
+| 18 | Download | `docs/eval/5_print.png` | five | three | 49.4 % | no |
+| 19 | Download | `docs/eval/6_brad.png` | six | five | 37.9 % | no |
+| 20 | Download | `docs/eval/6_ink.png` | six | three | 30.7 % | no |
+| 21 | Download | `docs/eval/6_print.png` | six | five | 46.9 % | no |
+| 22 | Download | `docs/eval/7_brad.png` | seven | one | 78.4 % | no |
+| 23 | Download | `docs/eval/7_ink.png` | seven | one | 51.2 % | no |
+| 24 | Download | `docs/eval/7_print.png` | seven | four | 52.3 % | no |
+| 25 | Download | `docs/eval/8_brad.png` | eight | five | 80.9 % | no |
+| 26 | Download | `docs/eval/8_ink.png` | eight | five | 49.2 % | no |
+| 27 | Download | `docs/eval/8_print.png` | eight | eight | 71.5 % | yes |
+| 28 | Download | `docs/eval/9_brad.png` | nine | zero | 35.8 % | no |
+| 29 | Download | `docs/eval/9_ink.png` | nine | two | 34.6 % | no |
+| 30 | Download | `docs/eval/9_print.png` | nine | two | 56.3 % | no |
 
-Overall accuracy: ___ / ___ = ___ %
-Weakest class: ___
+Overall accuracy: 13 / 30 = 43.3 %
+Per class: zero 2/3, one 2/3, two 2/3, three 3/3, four 2/3, five 1/3, six 0/3, seven 0/3, eight 1/3, nine 0/3
+Weakest class: six, seven and nine (0 / 3 each). Sevens were mostly read as "one" or "four", nines as "two"/"zero", and sixes as "three"/"five". Fonts are cleaner and thicker than our training samples, so a phone photo of real handwriting should do better on some classes, but these three are clearly the weakest. A blank white image comes out as "one" (~90 %), because there is no background class.
 
 ## Checkpoint questions
 1. Trace one photo from the shutter button to the percentage on screen: every transformation and the file where it happens.

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import 'screens/welcome_screen.dart';
@@ -46,6 +47,30 @@ class _TmClassifierAppState extends State<TmClassifierApp> with WidgetsBindingOb
         debugShowCheckedModeBanner: false,
         theme: buildAppTheme(),
         home: const WelcomeScreen(),
+        builder: (context, child) => kIsWeb ? _PhoneFrame(child: child!) : child!,
+      ),
+    );
+  }
+}
+
+// on a wide browser window show the app at phone size
+class _PhoneFrame extends StatelessWidget {
+  const _PhoneFrame({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final mq = MediaQuery.of(context);
+    if (mq.size.width <= 600) return child;
+    final size = Size(412, mq.size.height < 915 ? mq.size.height : 915);
+    return ColoredBox(
+      color: const Color(0xFF1E1E1E),
+      child: Center(
+        child: SizedBox.fromSize(
+          size: size,
+          child: MediaQuery(data: mq.copyWith(size: size), child: ClipRect(child: child)),
+        ),
       ),
     );
   }

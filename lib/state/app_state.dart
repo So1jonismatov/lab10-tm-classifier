@@ -84,7 +84,9 @@ class AppState extends ChangeNotifier {
       final watch = Stopwatch()..start();
       final predictions = await classifier.classify(bytes);
       watch.stop();
-      debugPrint('classify: ${watch.elapsedMilliseconds} ms, ${bytes.length} bytes -> ${predictions.first.label}');
+      final top = predictions.first;
+      debugPrint('classify: ${source.label}, ${watch.elapsedMilliseconds} ms -> ${top.label} '
+          '${(top.confidence * 100).toStringAsFixed(1)}%');
       final entry = HistoryEntry(
         bytes: bytes,
         predictions: predictions,

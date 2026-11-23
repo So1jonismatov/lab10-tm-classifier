@@ -6,8 +6,9 @@ Take a photo, pick one from the gallery or download one from a URL and it shows 
 
 ## Run
 
-1. Put `model_unquant.tflite` (or `model.tflite`) and `labels.txt` from Teachable Machine in `assets/model/`
-2. `flutter pub get`
-3. `flutter run`
+The model (quantized `model.tflite`, digits 0-9) and `labels.txt` are in `assets/model/`.
+
+1. `flutter pub get`
+2. `flutter run`
 
 Tests: `flutter test`

@@ -12,3 +12,11 @@ The model (quantized `model.tflite`, digits 0-9) and `labels.txt` are in `assets
 2. `flutter run`
 
 Tests: `flutter test`
+
+The model runs on Android/iOS (tflite_flutter uses dart:ffi). `flutter run -d chrome` also works to look at the screens, but classifying is phone-only there.
+
+## Screenshots (web build)
+
+| Welcome | Home | History | Model |
+|---|---|---|---|
+| ![](docs/screenshots/1-welcome.jpg) | ![](docs/screenshots/2-home.jpg) | ![](docs/screenshots/3-history.jpg) | ![](docs/screenshots/4-model.jpg) |

@@ -2,8 +2,8 @@
 class DesignCredit {
   const DesignCredit._();
 
-  static const name = 'TODO: Figma file name';
-  static const author = 'TODO: author';
-  static const link = 'TODO: https://www.figma.com/community/file/...';
-  static const licence = 'TODO: licence (e.g. CC BY 4.0)';
+  static const name = 'Material 3 Design Kit';
+  static const author = 'Material Design (Google)';
+  static const link = 'https://www.figma.com/community/file/1035203688168086460';
+  static const licence = 'CC BY 4.0';
 }

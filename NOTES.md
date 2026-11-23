@@ -1,6 +1,6 @@
 # Lab 10 notes: Teachable Machine image classifier
 
-Students: ______________  Partner: ______________
+Student: Sobirjon Ismatov (ID 240413)  Partner: ______________
 
 ## Class list (T1)
 Handwritten digits, 10 classes (Teachable Machine image project, exported as TFLite **quantized**):
@@ -19,11 +19,11 @@ Handwritten digits, 10 classes (Teachable Machine image project, exported as TFL
 There is no separate background class, so an empty page will still get one of the digits.
 
 ## Design credit (T14)
-- Name:
-- Author:
-- Link:
-- Licence:
-- Also update `lib/theme/design_credit.dart` (shown on the Model screen).
+- Name: Material 3 Design Kit
+- Author: Material Design (Google)
+- Link: https://www.figma.com/community/file/1035203688168086460
+- Licence: CC BY 4.0
+- Also shown in the app on the Model screen (`lib/theme/design_credit.dart`).
 
 ## Part 1 questions
 1. What does the model answer for an object that belongs to none of the classes? How does the background class change that?
@@ -46,6 +46,8 @@ There is no separate background class, so an empty page will still get one of th
 
 ## Part 4 questions
 1. Two things in the Figma design that you changed or left out in Flutter, and why.
+   - Colours: the kit uses the default purple baseline scheme. I used `ColorScheme.fromSeed` with a teal seed instead, so the app has its own colour but keeps the M3 tonal roles (primary, secondaryContainer, surfaceContainer...).
+   - Left out most components (FABs, the large/medium top app bars, side sheets, carousels). The app only has a few screens, so I used the small top app bar, filled/outlined buttons, cards, chips and the navigation bar, and made the corners rounder (16 px).
 2. The Model screen shows the labels. Does it read them from the classifier or from the file again? Defend your choice.
    - From the classifier. It's the same list used for the results so they can't be different, and no need to read the file twice.
 

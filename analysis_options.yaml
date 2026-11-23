@@ -9,3 +9,6 @@ analyzer:
     - windows/**
     - macos/**
     - linux/**
+  errors:
+    # flutter 3.47 moved material to package:material_ui, still works fine
+    deprecated_member_use: ignore

@@ -102,10 +102,14 @@ class AppState extends ChangeNotifier {
     }
   }
 
-  @override
-  void dispose() {
+  void closeClassifier() {
     _classifier?.close();
     _classifier = null;
+  }
+
+  @override
+  void dispose() {
+    closeClassifier();
     super.dispose();
   }
 }

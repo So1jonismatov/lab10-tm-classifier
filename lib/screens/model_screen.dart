@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../services/classifier.dart';
 import '../state/app_state.dart';
 import '../theme/app_theme.dart';
 import '../theme/design_credit.dart';

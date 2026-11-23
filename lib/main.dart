@@ -27,7 +27,7 @@ class _TmClassifierAppState extends State<TmClassifierApp> with WidgetsBindingOb
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState lifecycle) {
-    if (lifecycle == AppLifecycleState.detached) _state.dispose();
+    if (lifecycle == AppLifecycleState.detached) _state.closeClassifier();
   }
 
   @override

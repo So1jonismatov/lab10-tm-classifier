@@ -29,7 +29,7 @@ class WelcomeScreen extends StatelessWidget {
                   Text('Teach It, Ship It', style: theme.textTheme.headlineMedium),
                   const SizedBox(height: AppSpacing.sm),
                   Text(
-                    'Recognises my own objects from a photo, fully offline, '
+                    'Recognises handwritten digits (0-9) from a photo, fully offline, '
                     'with a model I trained myself.',
                     style: theme.textTheme.bodyLarge,
                   ),

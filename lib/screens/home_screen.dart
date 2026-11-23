@@ -80,7 +80,7 @@ class HomeScreen extends StatelessWidget {
         ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            Text('Classify an object', style: theme.textTheme.headlineMedium),
+            Text('Read a digit', style: theme.textTheme.headlineMedium),
             const SizedBox(height: AppSpacing.sm),
             Text('Pick where the picture comes from.', style: theme.textTheme.bodyLarge),
             const SizedBox(height: AppSpacing.lg),
